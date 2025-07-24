@@ -32,21 +32,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-        	.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                .requestMatchers("/profile", "/cart").authenticated()
-                .anyRequest().permitAll()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/home", true)
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-               .logoutSuccessUrl("/home")
-                .permitAll()
-            );
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/profile", "/cart/**").authenticated()
+                        .anyRequest().permitAll())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/home")
+                        .invalidateHttpSession(true) // ✅ destroys session
+                        .clearAuthentication(true) // ✅ removes authentication
+                        .deleteCookies("JSESSIONID") // ✅ deletes login cookie
+                        .permitAll());
 
         return http.build();
     }

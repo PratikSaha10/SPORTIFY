@@ -1,12 +1,12 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!-- <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Sportify - Shop</title>
-    <!-- Bootstrap CSS -->
+    
 		<link href="/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 		<link href="/css/tiny-slider.css" rel="stylesheet">
 		<link href="/css/style.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
@@ -33,5 +33,172 @@
 		<script src="/js/bootstrap.bundle.min.js"></script>
 		<script src="/js/tiny-slider.js"></script>
 		<script src="/js/custom.js"></script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Sportify - Shop</title>
+   <link rel="shortcut icon" href="/assets/favicon1.png">
+
+  <!-- Styles -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/tiny-slider.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Navbar (same as home page) -->
+<nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" aria-label="Sportify navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/" th:href="@{/home}">Sportify<span>.</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsSportify">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsSportify">
+      <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+        <li><a class="nav-link" th:href="@{/shop}">Shop</a></li>
+        <!-- <li><a class="nav-link" th:href="@{/categories}">Categories</a></li> -->
+        <li><a class="nav-link active" th:href="@{/about}">About</a></li>
+        <li><a class="nav-link" th:href="@{/contact}">Contact</a></li>
+
+        <li th:if="${#authorization.expression('isAuthenticated()')}">
+          <a class="nav-link" th:href="@{/profile}">Profile</a>
+        </li>
+        <li th:if="${#authorization.expression('isAuthenticated()')}">
+          <a class="nav-link" th:href="@{/cart}">Cart</a>
+        </li>
+        <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+          <a class="nav-link" th:href="@{/admin/dashboard}">Admin</a>
+        </li>
+        <li th:if="${!#authorization.expression('isAuthenticated()')}">
+          <a class="nav-link" th:href="@{/login}">Login</a>
+        </li>
+        <!-- <li th:if="${!#authorization.expression('isAuthenticated()')}">
+          <a class="nav-link" th:href="@{/register}">Register</a>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Shop Content -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="mb-5 text-center">Our Products</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4" th:each="product : ${products}">
+        <div class="card h-100 shadow-sm">
+          <img th:src="${product.imageUrl}" class="card-img-top" alt="Product Image">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title" th:text="${product.name}">Product Name</h5>
+            <p class="card-text text-muted" th:text="${product.description}">Short description</p>
+            <h6 class="fw-bold text-primary mb-3">₹ <span th:text="${product.price}">0.00</span></h6>
+
+            <div class="mt-auto">
+              <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post" th:if="${#authentication.authenticated}">
+                <div class="input-group mb-2">
+                  <input type="number" name="quantity" value="1" min="1" class="form-control">
+                  <button type="submit" class="btn btn-primary">Add to Cart</button>
+                </div>
+              </form>
+
+              <div th:unless="${#authentication.authenticated}">
+                <a th:href="@{/login}" class="btn btn-outline-secondary btn-sm w-100">Login to add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <!-- /col -->
+    </div>
+  </div>
+</section>
+
+<footer class="footer-section">
+        <div class="container relative">
+
+            <div class="row g-5 mb-5">
+                <div class="col-lg-4">
+                    <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Sportify<span>.</span></a></div>
+                    <p class="mb-4"></p>
+
+                    <ul class="list-unstyled custom-social">
+                        <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+                        <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+                        <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+                        <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="row links-wrap">
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="/about" th:href="@{/about}">About us</a></li>
+                                <li><a href="#">Services</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="/contact" th:href="@{/contact}">Contact us</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Support</a></li>
+                                <li><a href="#">Knowledge base</a></li>
+                                <li><a href="#">Live chat</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Jobs</a></li>
+                                <li><a href="#">Our team</a></li>
+                                <li><a href="#">Leadership</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Sports Kits</a></li>
+                                <li><a href="#">Gym Equipments</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-top copyright">
+                <div class="row pt-4">
+                    <div class="col-lg-6">
+                        <p class="mb-2 text-center text-lg-start">Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash;
+                            Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a
+                                hreff="https://themewagon.com">ThemeWagon</a>
+                            <!-- License information: https://untree.co/license/ -->
+                        </p>
+                    </div>
+
+                    <div class="col-lg-6 text-center text-lg-end">
+                        <ul class="list-unstyled d-inline-flex ms-auto">
+                            <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+<!-- Scripts -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/tiny-slider.js"></script>
+<script src="/js/custom.js"></script>
+
 </body>
 </html>

@@ -1,6 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!-- <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Bootstrap CSS -->
 		<link href="/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 		<link href="/css/tiny-slider.css" rel="stylesheet">
@@ -13,7 +12,7 @@
         <label>Username: <input type="text" th:field="*{username}"></label>
         <label>Password: <input type="password" th:field="*{password}"></label>
         <label>Email: <input type="email" th:field="*{email}"></label>
-        <button type="submit">Register</button>
+        <button class="btn btn-primary" type="submit">Register</button>
     </form>
 	<p th:if="${error}" th:text="${error}"></p>
 	<a th:href="@{/login}">Already have an account?</a>
@@ -21,5 +20,113 @@
 		<script src="/js/bootstrap.bundle.min.js"></script>
 		<script src="/js/tiny-slider.js"></script>
 		<script src="/js/custom.js"></script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Sportify - Register</title>
+
+  <!-- Styles -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/tiny-slider.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+  <link rel="shortcut icon" href="/assets/favicon1.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar (same as home page) -->
+<nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" aria-label="Sportify navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/" th:href="@{/home}">Sportify<span>.</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsSportify">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsSportify">
+      <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+        <li><a class="nav-link" th:href="@{/shop}">Shop</a></li>
+        <!-- <li><a class="nav-link" th:href="@{/categories}">Categories</a></li> -->
+        <li><a class="nav-link active" th:href="@{/about}">About</a></li>
+        <li><a class="nav-link" th:href="@{/contact}">Contact</a></li>
+
+        <li th:if="${#authorization.expression('isAuthenticated()')}">
+          <a class="nav-link" th:href="@{/profile}">Profile</a>
+        </li>
+        <li th:if="${#authorization.expression('isAuthenticated()')}">
+          <a class="nav-link" th:href="@{/cart}">Cart</a>
+        </li>
+        <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+          <a class="nav-link" th:href="@{/admin/dashboard}">Admin</a>
+        </li>
+        <li th:if="${!#authorization.expression('isAuthenticated()')}">
+          <a class="nav-link" th:href="@{/login}">Login</a>
+        </li>
+        <!-- <li th:if="${!#authorization.expression('isAuthenticated()')}">
+          <a class="nav-link" th:href="@{/register}">Register</a>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!--  Registration Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <h3 class="mb-4 text-center">Create Your Sportify Account</h3>
+
+            <!-- Optional: error or success message -->
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+            <form th:action="@{/register}" method="post">
+              <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" required placeholder="Choose a username">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" required placeholder="you@example.com">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required placeholder="Choose a password">
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-success">Register</button>
+              </div>
+            </form>
+
+            <div class="mt-4 text-center">
+              <span>Already have an account?</span>
+              <a th:href="@{/login}" class="btn btn-link">Login Here</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center py-4 bg-dark text-white">
+  <div class="container">
+    <p class="mb-0">© 2025 Sportify. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/tiny-slider.js"></script>
+<script src="/js/custom.js"></script>
+
 </body>
 </html>
