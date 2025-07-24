@@ -1,7 +1,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Add Product</title>
+    <!-- Bootstrap CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="/css/tiny-slider.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 </head>
+
 <body>
     <h1>Add New Product</h1>
     <form th:action="@{/admin/add}" method="post" th:object="${product}">
@@ -10,7 +17,11 @@
         <label>Price: <input type="number" th:field="*{price}"></label>
         <label>Image URL: <input type="text" th:field="*{imageUrl}"></label>
         <label>Stock: <input type="number" th:field="*{stock}"></label>
-        <button type="submit">Add Product</button>
+        <button class="btn btn-primary" type="submit">Add Product</button>
     </form>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/custom.js"></script>
 </body>
+
 </html>
