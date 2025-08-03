@@ -14,92 +14,91 @@
 </head>
 
 <body>
-<!-- Navbar (same as home page) -->
-<nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" aria-label="Sportify navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/" th:href="@{/home}">Sportify<span>.</span></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsSportify">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarsSportify">
-      <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-        <li><a class="nav-link" th:href="@{/shop}">Shop</a></li>
-        <!-- <li><a class="nav-link" th:href="@{/categories}">Categories</a></li> -->
-        <li><a class="nav-link active" th:href="@{/about}">About</a></li>
-        <li><a class="nav-link" th:href="@{/contact}">Contact</a></li>
+    <!-- Navbar (same as home page) -->
+    <nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" aria-label="Sportify navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/" th:href="@{/home}">Sportify<span>.</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsSportify">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsSportify">
+                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                    <li><a class="nav-link" th:href="@{/shop}">Shop</a></li>
+                    <li><a class="nav-link active" th:href="@{/about}">About</a></li>
+                    <li><a class="nav-link" th:href="@{/contact}">Contact</a></li>
 
-        <li th:if="${#authorization.expression('isAuthenticated()')}">
-          <a class="nav-link" th:href="@{/profile}">Profile</a>
-        </li>
-        <li th:if="${#authorization.expression('isAuthenticated()')}">
-          <a class="nav-link" th:href="@{/cart}">Cart</a>
-        </li>
-        <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
-          <a class="nav-link" th:href="@{/admin/dashboard}">Admin</a>
-        </li>
-        <li th:if="${!#authorization.expression('isAuthenticated()')}">
-          <a class="nav-link" th:href="@{/login}">Login</a>
-        </li>
-        <!-- <li th:if="${!#authorization.expression('isAuthenticated()')}">
-          <a class="nav-link" th:href="@{/register}">Register</a>
-        </li> -->
-      </ul>
-    </div>
-  </div>
-</nav>
+                    <li th:if="${#authorization.expression('isAuthenticated()')}">
+                        <a class="nav-link" th:href="@{/profile}">Profile</a>
+                    </li>
+                    <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+                        <a class="nav-link" th:href="@{/admin/dashboard}">Admin</a>
+                    </li>
+                </ul>
+                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                    <!-- Not Logged In -->
+                    <li th:if="${!#authorization.expression('isAuthenticated()')}">
+                        <a class="nav-link" th:href="@{/login}"><img src="/assets/user.svg"></a>
+                    </li>
+                    <li><a class="nav-link" th:href="@{/cart}"><img src="/assets/cart.svg"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<!-- Edit Product Form -->
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <div class="card shadow-sm">
-                <div class="card-body p-4">
-                    <h3 class="mb-4 text-center">Edit Product</h3>
+    <!-- Edit Product Form -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4 text-center">Edit Product</h3>
 
-                    <form th:action="@{/admin/edit/{id}(id=${product.id})}" method="post" th:object="${product}">
-                        <div class="mb-3">
-                            <label class="form-label">Product Name</label>
-                            <input type="text" class="form-control" th:field="*{name}" required>
+                        <form th:action="@{/admin/edit/{id}(id=${product.id})}" method="post" th:object="${product}">
+                            <div class="mb-3">
+                                <label class="form-label">Product Name</label>
+                                <input type="text" class="form-control" th:field="*{name}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" th:field="*{description}" rows="3" required></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Price (₹)</label>
+                                <input type="number" class="form-control" th:field="*{price}" min="0" step="0.01"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Image URL</label>
+                                <input type="text" class="form-control" th:field="*{imageUrl}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Stock</label>
+                                <input type="number" class="form-control" th:field="*{stock}" min="0" required>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i> Update Product
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="mt-4 text-center">
+                            <a th:href="@{/admin/dashboard}" class="btn btn-primary">← Back to Dashboard</a>
                         </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" th:field="*{description}" rows="3" required></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Price (₹)</label>
-                            <input type="number" class="form-control" th:field="*{price}" min="0" step="0.01" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Image URL</label>
-                            <input type="text" class="form-control" th:field="*{imageUrl}" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Stock</label>
-                            <input type="number" class="form-control" th:field="*{stock}" min="0" required>
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-1"></i> Update Product
-                            </button>
-                        </div>
-                    </form>
-
-                    <div class="mt-4 text-center">
-                        <a th:href="@{/admin/dashboard}" class="btn btn-primary">← Back to Dashboard</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Footer -->
-<footer class="footer-section">
+    <!-- Footer -->
+    <footer class="footer-section">
         <div class="container relative">
 
             <div class="row g-5 mb-5">
@@ -178,9 +177,10 @@
 
         </div>
     </footer>
-<script src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/tiny-slider.js"></script>
-<script src="/js/custom.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/tiny-slider.js"></script>
+    <script src="/js/custom.js"></script>
 
 </body>
+
 </html>

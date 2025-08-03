@@ -24,26 +24,24 @@
             <div class="collapse navbar-collapse" id="navbarsSportify">
                 <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
                     <li><a class="nav-link" th:href="@{/shop}">Shop</a></li>
-                    <!-- <li><a class="nav-link" th:href="@{/categories}">Categories</a></li> -->
                     <li><a class="nav-link active" th:href="@{/about}">About</a></li>
                     <li><a class="nav-link" th:href="@{/contact}">Contact</a></li>
 
                     <li th:if="${#authorization.expression('isAuthenticated()')}">
                         <a class="nav-link" th:href="@{/profile}">Profile</a>
                     </li>
-                    <li th:if="${#authorization.expression('isAuthenticated()')}">
-                        <a class="nav-link" th:href="@{/cart}">Cart</a>
-                    </li>
                     <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
                         <a class="nav-link" th:href="@{/admin/dashboard}">Admin</a>
                     </li>
-                    <li th:if="${!#authorization.expression('isAuthenticated()')}">
-                        <a class="nav-link" th:href="@{/login}">Login</a>
-                    </li>
-                    <!-- <li th:if="${!#authorization.expression('isAuthenticated()')}">
-          <a class="nav-link" th:href="@{/register}">Register</a>
-        </li> -->
                 </ul>
+                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                     <!-- Not Logged In -->
+						<li th:if="${!#authorization.expression('isAuthenticated()')}">
+                            <a class="nav-link" th:href="@{/login}"><img src="/assets/user.svg"></a>
+                        </li>
+						<li><a class="nav-link" th:href="@{/cart}"><img src="/assets/cart.svg"></a>
+						</li>
+					</ul>
             </div>
         </div>
     </nav>
@@ -53,14 +51,6 @@
         <div class="container">
             <h2 class="mb-4 text-center">Contact Us</h2>
             <div class="row align-items-center">
-                <!-- <div class="col-md-6 mb-4 mb-md-0">
-        <img src="/assets/favicon.png" alt="Sportify About" class="img-fluid rounded shadow">
-      </div>
-      <div class="col-md-6">
-        <p class="lead">Phone: 8585807085</p>
-        
-        <a href="/shop" th:href="@{/shop}" class="btn btn-primary mt-3">Start Shopping</a>
-      </div> -->
                 <section class="py-5">
                     <div class="container position-relative">
                         <div class="row align-items-center">
