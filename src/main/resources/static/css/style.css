@@ -127,9 +127,9 @@ a {
       top: 0px;
       right: 0px;
       z-index: 2;
-      max-width: 780px;
+      max-width: 700px;
       left: -20px; }
-      @media (min-width: 768px) {
+      @media (min-width: 700px) {
         .hero .hero-img-wrap img {
           right: 0px;
           left: -100px; } }
@@ -149,7 +149,7 @@ a {
       position: absolute;
       width: 255px;
       height: 217px;
-      background-image: url("../images/dots-light.svg");
+      background-image: url("../assets/dots-light.svg");
       background-size: contain;
       background-repeat: no-repeat;
       right: -100px;
@@ -278,7 +278,7 @@ a {
       content: "";
       width: 255px;
       height: 217px;
-      background-image: url("../images/dots-yellow.svg");
+      background-image: url("../assets/dots-yellow.svg");
       background-repeat: no-repeat;
       background-size: contain;
       -webkit-transform: translate(-40%, -40%);
