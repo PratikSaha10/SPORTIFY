@@ -41,10 +41,5 @@ public class CartController {
         cartService.removeFromCart(itemId);
         return "redirect:/cart";
     }
-    // @GetMapping("/cart/clear")
-    // public String clearCart(@AuthenticationPrincipal User user) {
-    //     cartService.clearCart(user);
-    //     return "redirect:/cart";
-    // }
 
 }

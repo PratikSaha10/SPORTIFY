@@ -15,7 +15,7 @@ public class UserService {
 
     public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");   //to register as admin setRole to 'ADMIN' once and then again replace eith'USER'
+        user.setRole("USER");   
         return userRepository.save(user);
     }
 
